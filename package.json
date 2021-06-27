@@ -11,7 +11,7 @@
     "dev": "cross-env NODE_ENV=development npm-run-all -l clean --parallel dev:*",
     "dev:webpack": "webpack --watch",
     "dev:eleventy": "eleventy --serve",
-    "build": "cross-env NODE_ENV=production npm-run-all -l clean build:eleventy build:webpack",
+    "build": "cross-env NODE_ENV=production npm-run-all -l clean build:webpack build:eleventy",
     "build:webpack": "webpack",
     "build:eleventy": "eleventy",
     "build:font": "svg2font --config ./svg2font.config.js",

@@ -2,6 +2,10 @@
 
 eleventy boilerplate based on [clenemt/eleventy-webpack](https://github.com/clenemt/eleventy-webpack).
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a1047a32-615e-4e7d-9af8-13d7d9cb73ae/deploy-status)](https://app.netlify.com/sites/xenodochial-morse-1c8f1c/deploys)
+
+[demo](https://xenodochial-morse-1c8f1c.netlify.app/)
+
 ## Features
 
 - [eleventy-webpack#features](https://github.com/clenemt/eleventy-webpack/tree/2b0242d3abc63c7135bcad11b9fce73e7ff03a00#features)
