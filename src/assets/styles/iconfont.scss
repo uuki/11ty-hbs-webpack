@@ -1,0 +1,62 @@
+/* stylelint-disable */
+
+@font-face {
+  font-family: 'iconfont';
+  
+  src: url("../_fonts/iconfont.woff2?t=1624428358588") format("woff2"),
+url("../_fonts/iconfont.woff?t=1624428358588") format("woff"),
+url('../_fonts/iconfont.ttf?t=1624428358588') format('truetype')/* chrome, firefox, opera, Safari, Android, iOS 4.2+*/;
+}
+
+[class^="iconfont-"], [class*=" iconfont-"] {
+  &::before {
+    font-family: 'iconfont' !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1;
+  }
+}
+
+.iconfont-external:before { content: "\ea01"; }
+
+$iconfont-external: "\ea01";
+
+$iconfont-icons: (
+  external: "\ea01",
+);
+
+@mixin iconfont-styles {
+	display: inline-block;
+	font-family: 'iconfont';
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	text-decoration: none;
+  text-transform: none;
+	line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+%iconfont-font {
+	@include iconfont-styles;
+}
+
+@mixin icon($filename, $insert: before, $extend: false) {
+	&:#{$insert} {
+		@if $extend {
+			@extend %iconfont-font;
+		} @else {
+			@include iconfont-styles;
+  		content: "#{map-get($iconfont-icons, $filename)}";
+		}
+
+    @content;
+	}
+}

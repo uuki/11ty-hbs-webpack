@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <meta charset="utf-8">
+  <title>{{#if title }}{{ title }}{{else}}{{ site.title }}{{/if}} - {{ site.name }}</title>
+  <meta name="description" content="{{#if description }}{{ description }}{{else}}{{ site.description }}{{/if}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no, address=no, email=no">
+
+  {{> _ogp}}
+
+  <link rel="preload" href="{{webpack 'main.css' }}" as="style">
+  <link rel="preload" href="{{webpack 'main.js' }}" as="script">
+
+  <link rel="stylesheet" href="{{webpack 'main.css' }}">
+  <script src="{{webpack 'main.js' }}" defer></script>
+</head>
+
+<body>
+  <main>
+    {{{content}}}
+  </main>
+
+  {{> _footer}}
+</body>
+</html>

@@ -1,0 +1,19 @@
+{{!-- global --}}
+<meta property="og:type" content="{{ site.og_type }}">
+
+<meta property="og:title" content="{{#orPrint og_title site.og_title site.title }}{{this}}{{/orPrint}}">
+<meta property="og:site_name" content="{{#orPrint og_site_name site.og_site_name site.name }}{{this}}{{/orPrint}}">
+<meta property="og:description" content="{{#orPrint og_description site.og_description site.description }}{{this}}{{/orPrint}}">
+<meta property="og:url" content="{{ site_url }}{{#orPrint og_url site.og_url}}{{this}}{{/orPrint}}">
+<meta property="og:image" content="{{ site_url }}{{#orPrint og_image site.og_image }}{{this}}{{/orPrint}}">
+<meta property="og:locale" content="{{#orPrint locale site.locale }}{{this}}{{/orPrint}}">
+
+{{!-- facebook --}}
+{{#if fb_app_id }}<meta property="fb:app_id" content="{{ fb_app_id }}">{{/if}}
+
+{{!-- twitter --}}
+{{#or twitter_title site.twitter_title }}<meta name="twitter:title" content="{{#orPrint twitter_title site.twitter_title }}{{this}}{{/orPrint}}">{{/or}}
+{{#or twitter_description site.twitter_description }}<meta name="twitter:description" content="{{#orPrint twitter_description site.twitter_description }}{{this}}{{/orPrint}}">{{/or}}
+{{#or twitter_url site.twitter_url }}<meta name="twitter:url" content="{{ site_url }}{{#orPrint twitter_url site.twitter_url }}{{this}}{{/orPrint}}">{{/or}}
+{{#or twitter_card site.twitter_card }}<meta name="twitter:card" content="{{#orPrint twitter_card site.twitter_card }}{{this}}{{/orPrint}}">{{/or}}
+{{#or twitter_image site.twitter_image }}<meta name="twitter:image" content="{{ site_url }}{{#orPrint twitter_image site.twitter_image }}{{this}}{{/orPrint}}">{{/or}}
