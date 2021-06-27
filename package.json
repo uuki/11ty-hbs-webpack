@@ -81,5 +81,8 @@
     "webpack-cli": "^4.2.0",
     "webpack-manifest-plugin": "^3.0.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.17.0"
+  }
 }
