@@ -190,9 +190,9 @@ Format the passed date according to [ISO format](https://date-fns.org/v2.16.1/do
 
 ```html
 <!-- Assuming page.date is a javascript date -->
-{{ page.date | formatISO }}
+{{formatISO "2021-06-27T18:04:02.024Z" }}
 <!-- Will be rendered as -->
-2020-09-18T19:00:52Z
+2021-06-28T03:04:02+09:00
 ```
 ___
 </details>

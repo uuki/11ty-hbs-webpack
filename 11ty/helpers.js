@@ -44,6 +44,7 @@ module.exports = {
     let value
 
     try {
+      date = date instanceof Date ? date : new Date(date)
       value = formatISO(date)
     } catch (err) {
       console.error(colors.red(err))
