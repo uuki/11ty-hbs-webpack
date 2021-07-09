@@ -1,6 +1,5 @@
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
-const PostCSSPresetEnv = require('postcss-preset-env')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StyleLintWebpackPlugin = require('stylelint-webpack-plugin')
@@ -68,11 +67,9 @@ module.exports = {
             options: {
               postcssOptions: {
                 plugins: [
-                  PostCSSPresetEnv({
-                    autoprefixer: {
-                      grid: true,
-                    },
-                  }),
+                  require('postcss-import')({ root: loader.resourcePath }),
+                  require('postcss-normalize')(),
+                  require('autoprefixer')({ grid: true }),
                 ],
               },
             },
