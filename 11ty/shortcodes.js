@@ -9,7 +9,7 @@ module.exports = {
    * {{{image src="image.jpg" alt="Image alt" }}} - Supports multiple srcset separated by commas
    *
    * ## Options
-   * media="(max-width:767px)" // or "(max-width:767px), (max-width:1279px)"
+   * media="(max-width: 767px)" // or "(max-width: 767px), (max-width: 1279px)"
    * sizes="100vw" // or "100vw, 100vw"
    * widths=""
    * caption=""

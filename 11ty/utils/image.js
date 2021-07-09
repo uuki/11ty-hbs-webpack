@@ -39,6 +39,7 @@ class Image {
     const fullSrc = isFullUrl(src) ? src : `./src/assets/images/${src}`
     const ext = getExtension(src)
     const resMatched = path.basename(src, `.${ext}`).match(/@(\d{1}x)/i) || []
+    const resRatio = resMatched[1] || ''
     const config = { ...this.config.image, ...options }
 
     config.formats = ext === 'webp' ? ['webp', 'jpeg'] : ['webp', ext]
@@ -63,13 +64,13 @@ class Image {
     // add suffix
     Object.keys(metadata).forEach((ext) => {
       metadata[ext] = metadata[ext].map((data) => {
-        const suffix = resMatched[1] ? ` ${resMatched[1]}` : ` ${data.width}w`
+        const suffix = resRatio ? ` ${resRatio}` : ` ${data.width}w`
         data.url = [`${data.url}${suffix}`]
         return data
       })
     })
 
-    return { metadata, fallback }
+    return { metadata, fallback, resRatio }
   }
 
   /**
@@ -88,9 +89,11 @@ class Image {
           image.url
             .map(
               (url, j) =>
-                `<source type="image/${image.format}" srcset="${url}" media="${
-                  media[i] ? media[i][j] || '' : ''
-                }" sizes="${sizes[i] ? sizes[i][j] || '' : ''}">`
+                `<source type="image/${image.format}" srcset="${
+                  Array.isArray(url) ? url.join(', ') : url
+                }" media="${media[i] ? media[i][j] || '' : ''}" sizes="${
+                  sizes[i] ? sizes[i][j] || '' : ''
+                }">`
             )
             .join('')
         )
@@ -122,11 +125,12 @@ class Image {
    * Normalize metadata
    */
   _mergeSource(metadata) {
-    return metadata.reduce((acc, data) => {
+    const meta = metadata.reduce((acc, data) => {
       if (!Object.keys(acc).length) {
         acc = { ...data }
         return acc
       }
+
       Object.keys(data.metadata).forEach((ext) => {
         // webp[] and any[]
         const imgs = data.metadata[ext]
@@ -137,9 +141,32 @@ class Image {
           return img
         })
       })
-
       return acc
     }, {})
+
+    // If the image has a resolution specified, the previous images are grouped.
+    Object.keys(meta.metadata).forEach((ext) => {
+      let lastGroupedIndex = 0
+
+      meta.metadata[ext] = meta.metadata[ext].map((data) => {
+        data.url = data.url.reduce((acc, cur) => {
+          if (/\s\d{1}x$/.test(cur)) {
+            acc.splice(
+              lastGroupedIndex,
+              acc.length,
+              acc.slice(lastGroupedIndex).concat(cur)
+            )
+            lastGroupedIndex = acc.length
+          } else {
+            acc.push(cur)
+          }
+          return acc
+        }, [])
+        return data
+      })
+    })
+
+    return meta
   }
 
   run(context) {

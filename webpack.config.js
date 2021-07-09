@@ -66,7 +66,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: [
+                plugins: (loader) => [
                   require('postcss-import')({ root: loader.resourcePath }),
                   require('postcss-normalize')(),
                   require('autoprefixer')({ grid: true }),

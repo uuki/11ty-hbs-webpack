@@ -92,43 +92,42 @@ ___
 Creates a WebP version of the image and the corresponding optimized JPEG / PNG. Images will be created in multiple sizes. See `11ty/shortcodes.js` for default values.
 
 ```html
-<!-- Assuming `src/assets/images/image.jpeg` of width 330px exist -->
-{{{ image src="image.jpeg" alt="Image alt" }}}
+<!-- Assuming `src/assets/images/image.jpeg` of width 100px exist -->
+{{{image src="eleventy_logo.png" alt="" }}}
 <!-- Will be rendered as -->
 <picture>
-  <source type="image/webp" srcset="/assets/images/678868de-320.webp 320w, /assets/images/678868de.webp 330w" media="" sizes="">
-  <img loading="lazy" src="/assets/images/678868de.png" alt="Image alt" width="330" height="580">
+  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
+  <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
 </picture>
 
+<!-- Additional options -->
+
 <!-- If a title is passed the shortcode will output a <figure> with <figcaption> -->
-{{{ image src="image.jpeg" alt="Image alt" caption="Image title" }}}
+{{{image src="eleventy_logo.png" alt="" caption="Image title" }}}
 <!-- Will be rendered as -->
 <figure>
   <picture>
-    <source type="image/webp" srcset="/assets/images/678868de-320.webp 320w, /assets/images/678868de.webp 330w" media="" sizes="">
-    <img loading="lazy" src="/assets/images/678868de.png" alt="Image alt" width="330" height="580">
+    <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
+    <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
   </picture>
   <figcaption>Image title</figcaption>
 </figure>
 
-<!-- Additional options -->
-
-<!-- This is a multiple source type. *If you add @{n}x as suffix to the image name, it will be converted to resolution -->
-{{{image src="image.jpg, image@2x.jpg" alt="" className="image"}}}
+<!-- This is a multiple source type. *If you add @{n}x as suffix to the image file name, it will be converted to resolution -->
+{{{image src="eleventy_logo.png, eleventy_logo@2x.png" alt="" className="image"}}}
 <!-- Will be rendered as -->
 <picture class="image">
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
-  <source type="image/webp" srcset="/assets/images/30eb47cb-200.webp 2x" media="" sizes="">
-  <img src="/assets/images/555c1f01-100.jpg" loading="lazy" width="100" height="182" alt="">
+  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w, /assets/images/30eb47cb-200.webp 2x" media="" sizes="">
+  <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
 </picture>
 
-<!-- In addition, you can specify the media for each image. *In this example, add media only for the first image -->
-{{{image src="image@2x.jpg, image.jpg" alt="" media="(max-width='767px'),"}}}
+<!-- In addition, you can specify the media for each image. -->
+{{{image src="eleventy_logo@2x.png, eleventy_logo.png, eleventy_logo@2x.png" alt="" media="(max-width: 767px),"}}}
 <!-- Will be rendered as -->
 <picture>
-  <source type="image/webp" srcset="/assets/images/30eb47cb-200.webp 2x" media="(max-width='767px')" sizes="">
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
-  <img src="/assets/images/30eb47cb-200.jpg" loading="lazy" width="200" height="363" alt="">
+  <source type="image/webp" srcset="/assets/images/30eb47cb-200.webp 2x" media="(max-width: 767px)" sizes="">
+  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w, /assets/images/30eb47cb-200.webp 2x" media="" sizes="">
+  <img src="/assets/images/30eb47cb-200.png" loading="lazy" width="200" height="363" alt="">
 </picture>
 
 <!-- It is also possible to automatically resize the image with the widths option -->
@@ -136,16 +135,6 @@ Creates a WebP version of the image and the corresponding optimized JPEG / PNG. 
 <!-- Will be rendered as -->
 <picture>
   <source type="image/webp" srcset="/assets/images/555c1f01-50.webp 50w" media="" sizes="">
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
-  <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
-</picture>
-
-<!-- In addition, you can specify media for each image.
- The syntax is a 3d array with "|" as the delimiter, e.g. [image [media]] -->
-{{{image src="eleventy_logo.png" alt="" widths="100, 100" media="(max-width='768px'),|"}}}
-```
-<picture>
-  <source type="image/webp" srcset="/assets/images/555c1f01-50.webp 50w" media="(max-width='768px')" sizes="">
   <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
   <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
 </picture>
