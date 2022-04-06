@@ -45,14 +45,14 @@ module.exports = (config) => {
   })
 
   // Pass-through files
-  // Everything inside static is copied verbatim to `_site/static`
+  // Everything inside static is copied verbatim to `_dist/static`
   config.addPassthroughCopy({ 'src/static': './static' })
 
   // BrowserSync Overrides
   config.setBrowserSyncConfig({
     ...config.browserSyncConfig,
     // @see https://browsersync.io/docs/options
-    server: ['_site'],
+    server: ['_dist'],
     // Reload when manifest file changes
     files: [env.paths.manifest],
     // Speed/clean up build time

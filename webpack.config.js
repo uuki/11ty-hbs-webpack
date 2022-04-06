@@ -1,4 +1,5 @@
 const path = require('path')
+const Dotenv = require('dotenv-webpack')
 const TerserPlugin = require('terser-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -6,41 +7,45 @@ const StyleLintWebpackPlugin = require('stylelint-webpack-plugin')
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 const LicenseInfoWebpackPlugin = require('license-info-webpack-plugin').default
 
-const ENV = require('./11ty/env')
-const BUILD = require('./src/data/build')
+const __Eleventy = require('./11ty/env')
+const ENV = require('./src/data/build')
 
 module.exports = {
-  mode: BUILD.env,
-  performance: { hints: BUILD.isDev ? false : 'warning' },
+  mode: ENV.NODE_ENV,
+  performance: { hints: ENV.isDev ? false : 'warning' },
   // Eval does not work for css source maps
   // `All values enable source map generation except eval and false value.`
   // https://github.com/webpack-contrib/css-loader
-  devtool: BUILD.isDev ? 'cheap-module-source-map' : 'source-map',
+  devtool: ENV.isDev ? 'cheap-module-source-map' : 'source-map',
   entry: [
-    path.resolve(__dirname, 'src/assets/scripts/app.js'),
+    path.resolve(__dirname, 'src/assets/js/app.ts'),
     path.resolve(__dirname, 'src/assets/styles/app.scss'),
   ],
   output: {
-    filename: BUILD.isDev ? '[name].js' : '[name].[contenthash].js',
-    path: path.resolve(__dirname, '_site/assets'),
+    filename: ENV.isDev ? '[name].js' : '[name].[contenthash].js',
+    path: path.resolve(__dirname, '_dist/assets'),
     publicPath: '/assets/',
+    chunkFilename: 'js/chunk/[name].chunk.[chunkhash:5].js',
   },
   plugins: [
     new WebpackManifestPlugin(),
-    new MiniCssExtractPlugin({
-      filename: BUILD.isDev ? '[name].css' : '[name].[contenthash].css',
+    new Dotenv({
+      path: path.resolve(__dirname, `.env.${ENV.NODE_ENV}`),
     }),
-    !BUILD.isDev &&
+    ENV.isDev &&
+      new StyleLintWebpackPlugin({
+        configFile: path.resolve(__dirname, '.stylelintrc.js'),
+        files: ['src/assets/styles/**/*.{scss}'],
+      }),
+    new MiniCssExtractPlugin({
+      filename: ENV.isDev ? '[name].css' : '[name].[contenthash].css',
+    }),
+    !ENV.isDev &&
       new LicenseInfoWebpackPlugin({
         glob: '{LICENSE,license,License}*',
       }),
-    BUILD.isDev &&
-      new StyleLintWebpackPlugin({
-        configFile: path.resolve(__dirname, '.stylelintrc.js'),
-        files: ['src/**/*.scss'],
-      }),
   ].filter(Boolean),
-  ...(!BUILD.isDev && {
+  ...(!ENV.isDev && {
     optimization: {
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
     },
@@ -48,12 +53,23 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.js[x]?$/,
         exclude: /node_modules/,
         use: ['babel-loader', 'eslint-loader'],
       },
       {
+        test: /\.ts[x]?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
+      },
+      {
+        test: /\.ya?ml$/,
+        type: 'json',
+        use: 'yaml-loader',
+      },
+      {
         test: /\.s[c|a]ss$/,
+        exclude: /node_modules/,
         enforce: 'pre',
         loader: 'import-glob-loader',
       },
@@ -82,7 +98,7 @@ module.exports = {
         type: 'asset',
         generator: {
           filename: `images/${
-            BUILD.isDev ? '[name][ext]' : '[contenthash][ext]'
+            ENV.isDev ? '[name][ext]' : '[contenthash][ext]'
           }`,
         },
       },
@@ -91,7 +107,7 @@ module.exports = {
         type: 'asset/resource',
         generator: {
           filename: `_fonts/${
-            BUILD.isDev ? '[name][ext]' : '[contenthash][ext]'
+            ENV.isDev ? '[name][ext]' : '[contenthash][ext]'
           }`,
         },
       },
@@ -99,8 +115,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      // Helpful alias for importing src
-      '~': path.resolve(ENV.paths.root, 'src'),
+      '@': path.resolve(__Eleventy.paths.root, 'src'),
     },
   },
   stats: {

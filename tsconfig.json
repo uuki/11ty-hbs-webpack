@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "sourceMap": true,
+    "target": "ES5",
+    "module": "ES2015",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "strict": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["ES2020", "DOM", "dom.iterable"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "outDir": "./laravel/public/assets/js"
+  },
+  "include": ["./src/types/**/*.d.ts", "./src/assets/js/**/*.ts"],
+  "exclude": [
+    "node_modules"
+  ]
+}

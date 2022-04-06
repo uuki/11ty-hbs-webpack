@@ -1,23 +1,7 @@
-# Build results
-_site/
-.cache/
-
-## Node.js
-*.log
-npm-debug.log
-node_modules
-
-## mac OS
+## System
 .DS_Store
-
-## Windows
 Thumbs.db
 $RECYCLE.BIN/
-
-## env
-.node-version
-.ruby-version
-.htpasswd
 
 ## Binary
 *.zip
@@ -28,3 +12,17 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+## Development
+node_modules
+
+## env
+.env.development
+.env.production
+.env.staging
+.node-version
+.ruby-version
+
+# Build results
+_dist/
+.cache/

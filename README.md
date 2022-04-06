@@ -20,7 +20,7 @@ And the main changes are as follows
 
 ## Usage
 
-- Node.js@14.17.0
+- Node.js >= 14.17.0
 
 First install the dependencies:
 
@@ -33,8 +33,8 @@ Then you can:
 | Command               | Description                                   |
 | --------------------- | --------------------------------------------- |
 | **`yarn dev`** | Run your website on http://localhost:8080 |
-| **`yarn build`** | Build your production website inside `/_site` |
-| **`yarn format`**  | Run prettier on all filles except `/_site` |
+| **`yarn build`** | Build your production website inside `/_dist` |
+| **`yarn format`**  | Run prettier on all filles except `/_dist` |
 | **`yarn analyze`** | Output info on your bundle size |
 | **`yarn lint:js`** | Run eslint |
 | **`yarn lint:style`** | Run stylelint |

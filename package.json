@@ -11,18 +11,16 @@
     "dev": "cross-env NODE_ENV=development npm-run-all -l clean --parallel dev:*",
     "dev:webpack": "webpack --watch",
     "dev:eleventy": "eleventy --serve",
-    "build": "cross-env NODE_ENV=production npm-run-all -l clean build:webpack build:eleventy",
-    "build:webpack": "webpack",
-    "build:eleventy": "eleventy",
+    "build": "cross-env NODE_ENV=production npm-run-all -l clean webpack eleventy",
     "build:font": "svg2font --config ./svg2font.config.js",
-    "analyze": "npm-run-all build analyze:*",
-    "analyze:js": "source-map-explorer _site/**/*.js _site/**/*.js.map --no-border-checks",
-    "format": "prettier --write **/*.{js,s?css,yml} !_site",
-    "lint:js": "./node_modules/.bin/eslint \"src/assets/scripts/**/*.js\"",
-    "lint:styles": "./node_modules/.bin/stylelint \"src/assets/styles/**/*.scss\"",
+    "lint:js": "eslint \"src/assets/scripts/**/*.js\"",
+    "lint:style": "stylelint \"src/assets/styles/**/*.scss\"",
     "fix:js": "yarn lint:js --fix",
     "fix:style": "yarn lint:style --fix",
-    "clean": "rimraf _site"
+    "format": "prettier --write **/*.{js,s?css,yml} !_dist",
+    "analyze": "npm-run-all build analyze:*",
+    "analyze:js": "source-map-explorer _dist/**/*.js _dist/**/*.js.map --no-border-checks",
+    "clean": "rimraf _dist"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.1",
@@ -44,6 +42,8 @@
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.1.5",
     "date-fns": "^2.16.1",
+    "dotenv": "^16.0.0",
+    "dotenv-webpack": "^7.1.0",
     "eleventy-plugin-error-overlay": "^0.1.2",
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -78,13 +78,13 @@
     "stylelint-scss": "3.19.0",
     "stylelint-webpack-plugin": "^2.2.1",
     "svg-sprite": "^1.5.0",
+    "ts-loader": "9.2.3",
+    "typescript": "4.3.5",
     "vinyl": "^2.2.1",
     "webpack": "^5.10.1",
     "webpack-cli": "^4.2.0",
-    "webpack-manifest-plugin": "^3.0.0"
+    "webpack-manifest-plugin": "^3.0.0",
+    "yaml-loader": "^0.6.0"
   },
-  "dependencies": {},
-  "engines": {
-    "node": ">=14.17.0"
-  }
+  "dependencies": {}
 }

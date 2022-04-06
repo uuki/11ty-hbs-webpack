@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   extends: ['eslint:recommended', 'prettier'],
   env: {
@@ -7,10 +9,13 @@ module.exports = {
   },
   parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
+    },
+    babelOptions: {
+      configFile: path.join(__dirname, '.babelrc.js'),
     },
   },
   rules: {
