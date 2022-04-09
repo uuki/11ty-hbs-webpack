@@ -14,7 +14,7 @@ const SVGSpriter = require('svg-sprite')
 module.exports = class {
   async data() {
     return {
-      permalink: `/assets/images/sprite.svg`,
+      permalink: `/assets/img/sprite.svg`,
       eleventyExcludeFromCollections: true,
     }
   }

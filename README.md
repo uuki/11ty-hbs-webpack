@@ -79,7 +79,7 @@ Any SVG added to `src/assets/icons` is bundled into a symbol sprite file and mad
 {{{ icon "github" }}} Github icon
 <!-- Will be rendered as -->
 <svg class="icon icon--github" role="img" aria-hidden="true">
-  <use xlink:href="/assets/images/sprite.svg#github"></use>
+  <use xlink:href="/assets/img/sprite.svg#github"></use>
 </svg>
 ```
 ___
@@ -92,12 +92,12 @@ ___
 Creates a WebP version of the image and the corresponding optimized JPEG / PNG. Images will be created in multiple sizes. See `11ty/shortcodes.js` for default values.
 
 ```html
-<!-- Assuming `src/assets/images/image.jpeg` of width 100px exist -->
+<!-- Assuming `src/assets/img/image.jpeg` of width 100px exist -->
 {{{image src="eleventy_logo.png" alt="" }}}
 <!-- Will be rendered as -->
 <picture>
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
-  <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
+  <source type="image/webp" srcset="/assets/img/555c1f01-100.webp 100w" media="" sizes="">
+  <img src="/assets/img/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
 </picture>
 
 <!-- Additional options -->
@@ -107,8 +107,8 @@ Creates a WebP version of the image and the corresponding optimized JPEG / PNG. 
 <!-- Will be rendered as -->
 <figure>
   <picture>
-    <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
-    <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
+    <source type="image/webp" srcset="/assets/img/555c1f01-100.webp 100w" media="" sizes="">
+    <img src="/assets/img/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
   </picture>
   <figcaption>Image title</figcaption>
 </figure>
@@ -117,26 +117,26 @@ Creates a WebP version of the image and the corresponding optimized JPEG / PNG. 
 {{{image src="eleventy_logo.png, eleventy_logo@2x.png" alt="" className="image"}}}
 <!-- Will be rendered as -->
 <picture class="image">
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w, /assets/images/30eb47cb-200.webp 2x" media="" sizes="">
-  <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
+  <source type="image/webp" srcset="/assets/img/555c1f01-100.webp 100w, /assets/img/30eb47cb-200.webp 2x" media="" sizes="">
+  <img src="/assets/img/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
 </picture>
 
 <!-- In addition, you can specify the media for each image. -->
 {{{image src="eleventy_logo@2x.png, eleventy_logo.png, eleventy_logo@2x.png" alt="" media="(max-width: 767px),"}}}
 <!-- Will be rendered as -->
 <picture>
-  <source type="image/webp" srcset="/assets/images/30eb47cb-200.webp 2x" media="(max-width: 767px)" sizes="">
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w, /assets/images/30eb47cb-200.webp 2x" media="" sizes="">
-  <img src="/assets/images/30eb47cb-200.png" loading="lazy" width="200" height="363" alt="">
+  <source type="image/webp" srcset="/assets/img/30eb47cb-200.webp 2x" media="(max-width: 767px)" sizes="">
+  <source type="image/webp" srcset="/assets/img/555c1f01-100.webp 100w, /assets/img/30eb47cb-200.webp 2x" media="" sizes="">
+  <img src="/assets/img/30eb47cb-200.png" loading="lazy" width="200" height="363" alt="">
 </picture>
 
 <!-- It is also possible to automatically resize the image with the widths option -->
 {{{image src="eleventy_logo.png" alt="" widths="50, 100"}}}
 <!-- Will be rendered as -->
 <picture>
-  <source type="image/webp" srcset="/assets/images/555c1f01-50.webp 50w" media="" sizes="">
-  <source type="image/webp" srcset="/assets/images/555c1f01-100.webp 100w" media="" sizes="">
-  <img src="/assets/images/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
+  <source type="image/webp" srcset="/assets/img/555c1f01-50.webp 50w" media="" sizes="">
+  <source type="image/webp" srcset="/assets/img/555c1f01-100.webp 100w" media="" sizes="">
+  <img src="/assets/img/555c1f01-100.png" loading="lazy" width="100" height="182" alt="">
 </picture>
 
 ___

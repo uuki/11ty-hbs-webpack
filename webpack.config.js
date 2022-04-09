@@ -1,6 +1,7 @@
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
 const TerserPlugin = require('terser-webpack-plugin')
+const FileManagerPlugin = require('filemanager-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StyleLintWebpackPlugin = require('stylelint-webpack-plugin')
@@ -17,10 +18,10 @@ module.exports = {
   // `All values enable source map generation except eval and false value.`
   // https://github.com/webpack-contrib/css-loader
   devtool: ENV.isDev ? 'cheap-module-source-map' : 'source-map',
-  entry: [
-    path.resolve(__dirname, 'src/assets/js/app.ts'),
-    path.resolve(__dirname, 'src/assets/styles/app.scss'),
-  ],
+  entry: {
+    'js/app': path.resolve(__dirname, 'src/assets/js/app.ts'),
+    'css/style': path.resolve(__dirname, 'src/assets/styles/app.scss'),
+  },
   output: {
     filename: ENV.isDev ? '[name].js' : '[name].[contenthash].js',
     path: path.resolve(__dirname, '_dist/assets'),
@@ -31,6 +32,18 @@ module.exports = {
     new WebpackManifestPlugin(),
     new Dotenv({
       path: path.resolve(__dirname, `.env.${ENV.NODE_ENV}`),
+    }),
+    new FileManagerPlugin({
+      events: {
+        onEnd: {
+          copy: [
+            {
+              source: 'src/assets/img/**/*.{jpg,png,gif,svg,webp}',
+              destination: '_dist/assets/img',
+            },
+          ],
+        },
+      },
     }),
     ENV.isDev &&
       new StyleLintWebpackPlugin({
@@ -47,7 +60,14 @@ module.exports = {
   ].filter(Boolean),
   ...(!ENV.isDev && {
     optimization: {
-      minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: { drop_console: true },
+          },
+        }),
+        new CssMinimizerPlugin(),
+      ],
     },
   }),
   module: {
@@ -97,9 +117,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: 'asset',
         generator: {
-          filename: `images/${
-            ENV.isDev ? '[name][ext]' : '[contenthash][ext]'
-          }`,
+          filename: `img/${ENV.isDev ? '[name][ext]' : '[contenthash][ext]'}`,
         },
       },
       {
@@ -114,6 +132,7 @@ module.exports = {
     ],
   },
   resolve: {
+    extensions: ['.js', '.ts', '.tsx', '.json', '.yaml', '.yml'],
     alias: {
       '@': path.resolve(__Eleventy.paths.root, 'src'),
     },

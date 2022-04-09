@@ -15,8 +15,8 @@ class Image {
     const defaultConfig = {
       base: null, // Keep the structure based on this directory * wip
       image: {
-        urlPath: '/assets/images/',
-        outputDir: path.join(env.dir.output, 'assets/images'),
+        urlPath: '/assets/img/',
+        outputDir: path.join(env.dir.output, 'assets/img'),
         widths: config.defaultImagesWidths || [null],
         ...(config.defaultImagesSizes
           ? { sizes: config.defaultImagesSizes }
@@ -36,7 +36,7 @@ class Image {
    * Image optimization
    */
   _generate(src, options = {}) {
-    const fullSrc = isFullUrl(src) ? src : `./src/assets/images/${src}`
+    const fullSrc = isFullUrl(src) ? src : `./src/assets/img/${src}`
     const ext = getExtension(src)
     const resMatched = path.basename(src, `.${ext}`).match(/@(\d{1}x)/i) || []
     const resRatio = resMatched[1] || ''
@@ -47,10 +47,10 @@ class Image {
     try {
       EleventyImage(fullSrc, config)
     } catch (err) {
-      console.error('\n\x1b[31mERROR\x1b[0m creating image:')
-      console.error(`> (${src})`)
-      console.error(`  ${err}\n`)
-      return ''
+      console.error(
+        `\n--------------------------\n\x1b[31mERROR\x1b[0m [shortcodes/image] ${err}:\n> ${src}\n--------------------------`
+      )
+      return false
     }
 
     // get metadata
@@ -77,6 +77,10 @@ class Image {
    * Generate HTML
    */
   _generateHTML(metadata, options = {}) {
+    if (!metadata.length) {
+      return ''
+    }
+
     const normalizedData = this._mergeSource(metadata)
     const fallback = normalizedData.fallback
     const { alt, lazy, caption, className } = options
@@ -185,7 +189,9 @@ class Image {
       widths: widths ? parseArray(widths) : this.config.image.widths,
     }
 
-    const metadata = parseArray(src).map((s) => this._generate(s, options))
+    const metadata = parseArray(src)
+      .map((s) => this._generate(s, options))
+      .filter(Boolean)
 
     const html = this._generateHTML(metadata, {
       alt,

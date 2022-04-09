@@ -14,6 +14,6 @@ module.exports = (name, { className = null, size = ICON_DEFAULT_SIZE }) => {
     <svg class="${classes.join(' ')}" role="img" aria-hidden="true" width="${
     size[0]
   }" height="${size[1] || size[0]}">
-      <use xlink:href="/assets/images/sprite.svg#${name}"></use>
+      <use xlink:href="/assets/img/sprite.svg#${name}"></use>
     </svg>`
 }
