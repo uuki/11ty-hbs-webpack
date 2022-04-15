@@ -102,8 +102,9 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: (loader) => [
-                  require('postcss-import')({ root: loader.resourcePath }),
+                plugins: [
+                  require('postcss-custom-media')(),
+                  require('postcss-import')(),
                   require('postcss-normalize')(),
                   require('autoprefixer')({ grid: true }),
                 ],
